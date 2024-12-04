@@ -86,7 +86,7 @@ class LgRemoteControl extends LitElement {
             _show_vol_text: {},
             volume_value: { type: Number, reflect: true },
             output_entity: { type: Number, reflect: true },
-            
+
         };
     }
 
@@ -269,10 +269,10 @@ class LgRemoteControl extends LitElement {
                             <button class="btn-flat flat-high ripple" id="homeButton" style="margin-top: 0px; height: 50%;" @mousedown=${(e) => this._homeButtonDown(e)} @touchstart=${(e) => this._homeButtonDown(e)} @mouseup=${(e) => this._homeButtonUp(e)} @touchend=${(e) => this._homeButtonUp(e)}>
     <ha-icon icon="mdi:home"></ha-icon>
 </button>
-                                                    
 
 
-                            
+
+
 
 
 
@@ -337,10 +337,11 @@ class LgRemoteControl extends LitElement {
         });
     }
 
+
     _media_player_turn_on(mac) {
         if (this.config.mac) {
-            this.hass.callService("wake_on_lan", "send_magic_packet", {
-                mac: mac
+            this.hass.callService("input_button", "press", {
+              entity_id: mac
             });
         } else {
             this._media_player_service("POWER", "turn_on");
@@ -485,7 +486,7 @@ class LgRemoteControl extends LitElement {
           this._button("MENU")
       }, 1000); // Tempo in millisecondi per determinare una pressione prolungata
   }
-  
+
   _homeButtonUp(event: MouseEvent | TouchEvent) {
       clearTimeout(this.homelongPressTimer);
       if (!this.homeisLongPress) {
